@@ -3,10 +3,15 @@ package arabictouhou;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Frame;
-import java.awt.event.KeyListener;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class MainClass extends Applet implements Runnable, KeyListener {
+	private Aisha aisha;
+	private Image image;
+	private Graphics second;
 
 	@Override
 	public void init() {
@@ -19,6 +24,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void start() {
+		aisha = new Aisha();
 		Thread thread = new Thread();
 		thread.start();
 	}
@@ -42,6 +48,19 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void update(Graphics g) {
+		if (image == null) {
+			image = createImage(this.getWidth(), this.getHeight());
+			second = image.getGraphics();
+		}
+		second.setColor(getBackground());
+		second.fillRect(0, 0, getWidth(), getHeight());
+		second.setColor(getForeground());
+		paint(second);
+
+		g.drawImage(image, 0, 0, this);
 	}
 
 	@Override
