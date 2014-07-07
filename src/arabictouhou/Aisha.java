@@ -14,10 +14,10 @@ public class Aisha {
 		// scroll the background
 
 		// allows the character to move around
-		if (speedX > 0) {
+		if (speedX != 0) {
 			centerX += speedX;
 		}
-		if (speedY > 0) {
+		if (speedY != 0) {
 			centerY += speedY;
 		}
 
@@ -67,6 +67,38 @@ public class Aisha {
 	public void stop() {
 		speedX = 0;
 		speedY = 0;
+	}
+
+	public int getCenterX() {
+		return centerX;
+	}
+
+	public int getCenterY() {
+		return centerY;
+	}
+
+	public int getSpeedX() {
+		return speedX;
+	}
+
+	public int getSpeedY() {
+		return speedY;
+	}
+
+	public void setCenterX(int centerX) {
+		this.centerX = centerX;
+	}
+
+	public void setCenterY(int centerY) {
+		this.centerY = centerY;
+	}
+
+	public void setSpeedX(int speedX) {
+		this.speedX = speedX;
+	}
+
+	public void setSpeedY(int speedY) {
+		this.speedY = speedY;
 	}
 
 }

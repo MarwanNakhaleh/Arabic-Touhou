@@ -7,10 +7,14 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
 
 public class MainClass extends Applet implements Runnable, KeyListener {
+	// Aisha is our hero
 	private Aisha aisha;
-	private Image image;
+	//background and Aisha's sprite
+	private Image image, character;
+	private URL base;
 	private Graphics second;
 
 	@Override
@@ -20,6 +24,12 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		setFocusable(true);
 		Frame frame = (Frame) this.getParent().getParent();
 		frame.setTitle("Arabic Touhou: Witch Illusion?");
+		try {
+			base = getDocumentBase();
+		} catch (Exception e) {
+			// lel ur fucked m9
+		}
+		character = getImage(base, "data/character.png");
 	}
 
 	@Override
@@ -39,8 +49,15 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	}
 
+	@Override
+	public void paint(Graphics g) {
+		g.drawImage(character, aisha.getCenterX() - 40,
+				aisha.getCenterY() - 60, this);
+	}
+
 	public void run() {
 		while (true) {
+			aisha.update();
 			repaint();
 			try {
 				Thread.sleep(17);
@@ -67,16 +84,16 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			// move up
+			aisha.moveUp();
 			break;
 		case KeyEvent.VK_DOWN:
-			// move down
+			aisha.moveDown();
 			break;
 		case KeyEvent.VK_LEFT:
-			// move left
+			aisha.moveLeft();
 			break;
 		case KeyEvent.VK_RIGHT:
-			// move right
+			aisha.moveRight();
 			break;
 		case KeyEvent.VK_CONTROL:
 			// fire
@@ -88,16 +105,16 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			// stop moving up
+			aisha.stop();
 			break;
 		case KeyEvent.VK_DOWN:
-			// stop moving down
+			aisha.stop();
 			break;
 		case KeyEvent.VK_LEFT:
-			// stop moving left
+			aisha.stop();
 			break;
 		case KeyEvent.VK_RIGHT:
-			// stop moving right
+			aisha.stop();
 			break;
 		case KeyEvent.VK_CONTROL:
 			// stop firing
