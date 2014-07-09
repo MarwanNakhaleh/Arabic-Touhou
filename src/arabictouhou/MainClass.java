@@ -12,11 +12,14 @@ import java.net.URL;
 public class MainClass extends Applet implements Runnable, KeyListener {
 	// Aisha is our hero
 	private Aisha aisha;
-	//background and Aisha's sprite
+	// background and Aisha's sprite
 	private Image image, character;
 	private URL base;
 	private Graphics second;
+	//we need two backgrounds for smooth looping
+	private Background bg1, bg2;
 
+	// build the applet frame
 	@Override
 	public void init() {
 		setSize(480, 800);
@@ -32,13 +35,17 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		character = getImage(base, "data/character.png");
 	}
 
+	// create a thread that refreshes once every 1/60 seconds
 	@Override
 	public void start() {
+		bg1 = new Background(0,0);
+		bg2 = new Background(0,2160);
 		aisha = new Aisha();
 		Thread thread = new Thread();
 		thread.start();
 	}
 
+	// stop and destroy might be useful later
 	@Override
 	public void stop() {
 
@@ -49,15 +56,19 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	}
 
+	// draw everything on the screen
 	@Override
 	public void paint(Graphics g) {
 		g.drawImage(character, aisha.getCenterX() - 40,
 				aisha.getCenterY() - 60, this);
 	}
 
+	// run the thread once every 1/60 seconds
 	public void run() {
 		while (true) {
 			aisha.update();
+			bg1.update();
+			bg2.update();
 			repaint();
 			try {
 				Thread.sleep(17);
@@ -67,6 +78,8 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		}
 	}
 
+	// repaint everything with each frame... I feel like there should be a more
+	// efficient way to do this
 	public void update(Graphics g) {
 		if (image == null) {
 			image = createImage(this.getWidth(), this.getHeight());
