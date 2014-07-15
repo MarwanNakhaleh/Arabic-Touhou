@@ -3,7 +3,8 @@ package arabictouhou;
 public class Background {
 	private int bgX, bgY, speedY;
 
-	// the background will always be scrolling up
+	// the background will always be scrolling down, giving the illusion that
+	// Aisha is moving up
 	public Background(int x, int y) {
 		bgX = x;
 		bgY = y;
