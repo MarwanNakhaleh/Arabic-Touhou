@@ -123,8 +123,9 @@ public class Aisha {
 	}
 	
 	public void fire(){
-		Bullet b = new Bullet(centerX, centerY + 60);
+		Bullet b = new Bullet(centerX, centerY - 60);
 		b.setSpeedX(0);
+		b.setSpeedY(-10);
 		bullets.add(b);
 	}
 

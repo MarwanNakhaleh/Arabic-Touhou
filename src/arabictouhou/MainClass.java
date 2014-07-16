@@ -15,7 +15,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
 	private Aisha aisha;
 	private Rachel rachel;
-	private Image image, character, enemy, background;
+	private Image image, character, enemy, background, aishaBullet;
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
@@ -40,6 +40,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		character = getImage(base, "data/Aisha_sprite2.png");
 		enemy = getImage(base, "data/Rachel_sprite0.png");
 		background = getImage(base, "data/background.png");
+		aishaBullet = getImage(base, "data/Aisha_bullet.png");
 	}
 
 	@Override
@@ -118,10 +119,26 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void paint(Graphics g) {
+		//background goes on bottom
 		g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
 		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
+		//then Rachel's bullets
+		ArrayList<Bullet> rachelBullets = rachel.getBullets();
+		for(int i = 0; i < rachelBullets.size(); i++){
+			Bullet b = (Bullet) rachelBullets.get(i);
+			g.setColor(Color.decode("AAAAAA"));
+			g.fillOval(b.getX(), b.getY(), 10, 10);
+		}
+		//then Aisha's bullets
+		ArrayList<Bullet> aishaBullets = aisha.getBullets();
+		for(int i = 0; i < aishaBullets.size(); i++){
+			Bullet b = (Bullet) aishaBullets.get(i);
+			g.drawImage(aishaBullet, b.getX(), b.getY(), this);
+		}
+		//then Aisha
 		g.drawImage(character, aisha.getCenterX() - 30,
 				aisha.getCenterY() - 60, this);
+		//then Rachel
 		g.drawImage(enemy, rachel.getCenterX() - 50, rachel.getCenterY() - 68,
 				this);
 
@@ -152,6 +169,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			break;
 
 		case KeyEvent.VK_SPACE:
+			aisha.fire();
 			break;
 
 		}
