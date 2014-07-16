@@ -41,7 +41,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	@Override
 	public void start() {
 		bg1 = new Background(0,0);
-		bg2 = new Background(0,2160);
+		bg2 = new Background(0,-2160);
 		aisha = new Aisha();
 		Thread thread = new Thread(this);
 		thread.start();

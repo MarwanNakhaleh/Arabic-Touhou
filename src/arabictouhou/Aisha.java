@@ -5,7 +5,7 @@ import java.awt.Graphics;
 public class Aisha {
 
 	// Constants are Here
-	final int BACKGROUND_SPEED = -1;
+	final int BACKGROUND_SPEED = 1;
 	final int MOVESPEED = 5;
 	final int BOTTOM = 600;
 	final int TOP = 350;
