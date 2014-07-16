@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 public class Aisha {
 
-	// Constants are Here
 	final int BACKGROUND_SPEED = 1;
 	final int MOVESPEED = 5;
 	final int BOTTOM = 600;
@@ -28,14 +27,14 @@ public class Aisha {
 		bg1.setSpeedY(BACKGROUND_SPEED);
 		bg2.setSpeedY(BACKGROUND_SPEED);
 
-		// if speedX is less than 0, move the robot backwards but don't scroll
+		// if speedX is less than 0, move Aisha backwards but don't scroll
 		// the background
 		if (speedX < 0) {
 			centerX += speedX;
 		}
 
 		// if centerX is less than or equal to 200 and speedX is greater than 0,
-		// move the robot forward on the screen but don't scroll the background
+		// move Aisha forward on the screen but don't scroll the background
 		// this shit needs refactoring
 		if (centerX <= 450 && speedX > 0) {
 			centerX += speedX;

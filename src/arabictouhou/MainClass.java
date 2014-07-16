@@ -13,7 +13,8 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Aisha aisha;
-	private Image image, character, currentSprite, background;
+	private Rachel rachel;
+	private Image image, character, enemy, background;
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
@@ -26,23 +27,23 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		setFocusable(true);
 		addKeyListener(this);
 		Frame frame = (Frame) this.getParent().getParent();
-		frame.setTitle("Q-Bot Alpha");
+		// I still need a better title, I think
+		frame.setTitle("Devil's Cabana Girls: Army of Sluts");
 		try {
 			base = getDocumentBase();
 		} catch (Exception e) {
-			// TODO: handle exception
+			// lel looks like ur fucked m9
 		}
 
-		// Image Setups
+		// images
 		character = getImage(base, "data/Aisha_sprite2.png");
-		currentSprite = character;
 		background = getImage(base, "data/background.png");
 	}
 
 	@Override
 	public void start() {
-		bg1 = new Background(0,0);
-		bg2 = new Background(0,-2160);
+		bg1 = new Background(0, 0);
+		bg2 = new Background(0, -2160);
 		aisha = new Aisha();
 		Thread thread = new Thread(this);
 		thread.start();
@@ -93,7 +94,8 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	public void paint(Graphics g) {
 		g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
 		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
-		g.drawImage(currentSprite, aisha.getCenterX() - 30, aisha.getCenterY() - 60, this);
+		g.drawImage(character, aisha.getCenterX() - 30,
+				aisha.getCenterY() - 60, this);
 
 	}
 
@@ -167,8 +169,5 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	public static Background getBg2() {
 		return bg2;
 	}
-
-
-	
 
 }
