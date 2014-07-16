@@ -37,6 +37,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 		// images
 		character = getImage(base, "data/Aisha_sprite2.png");
+		enemy = getImage(base, "data/Rachel_sprite0.png");
 		background = getImage(base, "data/background.png");
 	}
 
@@ -45,6 +46,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		bg1 = new Background(0, 0);
 		bg2 = new Background(0, -2160);
 		aisha = new Aisha();
+		rachel = new Rachel(240, 75);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -63,6 +65,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	public void run() {
 		while (true) {
 			aisha.update();
+			rachel.update();
 			bg1.update();
 			bg2.update();
 			repaint();
@@ -96,6 +99,8 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
 		g.drawImage(character, aisha.getCenterX() - 30,
 				aisha.getCenterY() - 60, this);
+		g.drawImage(enemy, rachel.getCenterX() - 50, rachel.getCenterY() - 68,
+				this);
 
 	}
 

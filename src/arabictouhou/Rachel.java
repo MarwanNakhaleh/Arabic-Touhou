@@ -5,13 +5,12 @@ public class Rachel {
 	private int maxHealth, currentHealth, power, speedX, speedY, centerX, centerY;
 	private Background bg = MainClass.getBg1();
 	
-	public Rachel(){
+	public Rachel(int centerX, int centerY){
 		setCenterX(centerX);
 		setCenterY(centerY);
 	}
 	
 	public void update(){
-		centerY += speedY;
 		speedY = bg.getSpeedY();
 	}
 	
