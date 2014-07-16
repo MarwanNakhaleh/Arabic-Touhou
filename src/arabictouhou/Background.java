@@ -11,7 +11,7 @@ public class Background {
 		speedY = -2;
 	}
 
-	// loop a 480 x 2160 background... until I make the other background
+	// loop a 480 x 2160 background
 	public void update() {
 		bgY += speedY;
 		if (bgY <= -2160) {

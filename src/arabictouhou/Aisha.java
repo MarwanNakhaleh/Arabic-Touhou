@@ -1,52 +1,50 @@
 package arabictouhou;
 
+import java.awt.Graphics;
+
 public class Aisha {
 	// initial position of Aisha's sprite
 	private int centerX = 240;
 	private int centerY = 550;
-	private int moveSpeed = 4;
+	final int moveSpeed = 4;
 
 	// the character will not be moving by default
 	private int speedX = 0;
 	private int speedY = 0;
-	
-	public boolean movingLeft = false;
-	public boolean movingRight = false;
-	public boolean movingUp = false;
-	public boolean movingDown = false;
-	
+
+	private boolean movingLeft = false;
+	private boolean movingRight = false;
+	private boolean movingUp = false;
+	private boolean movingDown = false;
+
 	private static Background bg1 = MainClass.getBg1();
 	private static Background bg2 = MainClass.getBg2();
 
 	public void update() {
-		// Moves Character or Scrolls Background accordingly.
+		// remember not to scroll the background with Aisha's movements
 
-		if (speedX < 0) {
+		// if speedX is less than 0 and centerX is greater than 40, move Aisha
+		// left
+		if (centerX >= 40 && speedX < 0) {
 			centerX += speedX;
 		}
-		
-		if(centerY < 0){
-			centerY += speedY;
-		}
-		
-		//keep the background moving
-		bg1.setSpeedY(2);
-		bg2.setSpeedY(0);
 
-		centerX += speedX;
+		// if speedX is greater than 0 and centerX is less than 440, move Aisha
+		// right
 		if (centerX <= 440 && speedX > 0) {
 			centerX += speedX;
 		}
 
-		// updates y position
-		centerY += speedY;
-		if (centerY + speedY >= 620) {
-			centerY = 620;
+		// if speedY is greater than 0 and centerY is less than 740, move Aisha
+		// down
+		if (centerY < 740 && speedY < 0) {
+			centerY += speedY;
 		}
 
-		// prevents going beyond X coordinate of 0
-		if (centerX + speedX <= 40) {
-			centerX = 41;
+		// if speedX is less than 0 and centerY is greater than 460, move Aisha
+		// up
+		if (centerY > 460 && speedY < 0) {
+			centerY += speedX;
 		}
 	}
 
@@ -60,33 +58,53 @@ public class Aisha {
 		stop();
 	}
 
-	public void stop() {
-		if (!isMovingRight() && !isMovingLeft() && !isMovingDown() && !isMovingUp()) {
-			speedX = 0;
-			speedY = 0;
-		}
-	}
-
 	public void moveUp() {
-		System.out.println("up");
 		speedY = -moveSpeed;
+		System.out.println("up");
 	}
 
 	public void moveDown() {
-		System.out.println("down");
 		speedY = moveSpeed;
+		System.out.println("down");
 	}
 
 	public void moveLeft() {
-		System.out.println("left");
 		speedX = -moveSpeed;
+		System.out.println("left");
 	}
 
 	public void moveRight() {
-		System.out.println("right");
 		speedX = moveSpeed;
+		System.out.println("right");
 	}
 
+	public void stop() {
+		if (isMovingRight() == false && isMovingLeft() == false) {
+			speedX = 0;
+		}
+
+		if (isMovingRight() == false && isMovingLeft() == true) {
+			moveLeft();
+		}
+
+		if (isMovingRight() == true && isMovingLeft() == false) {
+			moveRight();
+		}
+
+		if (isMovingUp() == false && isMovingDown() == false) {
+			speedY = 0;
+		}
+
+		if (isMovingUp() == false && isMovingDown() == true) {
+			moveDown();
+		}
+
+		if (isMovingUp() == true && isMovingDown() == false) {
+			moveUp();
+		}
+	}
+
+	// setters and getters
 	public int getCenterX() {
 		return centerX;
 	}

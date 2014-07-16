@@ -22,17 +22,20 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	// build the applet frame
 	@Override
 	public void init() {
+		//create frame
 		setSize(480, 800);
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		addKeyListener(this);
 		Frame frame = (Frame) this.getParent().getParent();
 		frame.setTitle("Satan's Cabana Girls: Army of Sluts");
+		//document base for images
 		try {
 			base = getDocumentBase();
 		} catch (Exception e) {
 			// lel ur fucked m9
 		}
+		//images
 		character = getImage(base, "data/Aisha_sprite0.png");
 		background = getImage(base, "data/background.png");
 	}
@@ -40,8 +43,10 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	// create a thread that refreshes once every 1/60 seconds
 	@Override
 	public void start() {
+		//two backgrounds for looping
 		bg1 = new Background(0, 0);
 		bg2 = new Background(0, 2160);
+		//create Aisha and start thread
 		aisha = new Aisha();
 		Thread thread = new Thread();
 		thread.start();
@@ -58,19 +63,11 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	}
 
-	// draw everything on the screen
-	@Override
-	public void paint(Graphics g) {
-		g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
-		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
-		g.drawImage(character, aisha.getCenterX() - 30,
-				aisha.getCenterY() - 60, this);
-	}
-
 	// run the thread once every 1/60 seconds
 	@Override
 	public void run() {
 		while (true) {
+			//update Aisha and backgrounds
 			aisha.update();
 			bg1.update();
 			bg2.update();
@@ -100,6 +97,16 @@ public class MainClass extends Applet implements Runnable, KeyListener {
         g.drawImage(image, 0, 0, this);
 
     }
+	
+	// draw everything on the screen
+		@Override
+		public void paint(Graphics g) {
+			g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
+			g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
+			//Aisha is 60x120
+			g.drawImage(character, aisha.getCenterX() - 30,
+					aisha.getCenterY() - 60, this);
+		}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -120,7 +127,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			aisha.moveRight();
 			aisha.setMovingRight(true);
 			break;
-		case KeyEvent.VK_CONTROL:
+		case KeyEvent.VK_SPACE:
 			// fire
 			break;
 		}
@@ -145,7 +152,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			aisha.setMovingRight(false);
 			aisha.stop();
 			break;
-		case KeyEvent.VK_CONTROL:
+		case KeyEvent.VK_SPACE:
 			// stop firing
 			break;
 		}
