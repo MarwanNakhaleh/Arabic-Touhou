@@ -1,9 +1,12 @@
 package arabictouhou;
 
+import java.util.ArrayList;
+
 public class Rachel {
 
 	private int maxHealth, currentHealth, power, speedX, speedY, centerX, centerY;
 	private Background bg = MainClass.getBg1();
+	private ArrayList<Bullet> bullets = new ArrayList<>();
 	
 	public Rachel(int centerX, int centerY){
 		setCenterX(centerX);
@@ -84,6 +87,10 @@ public class Rachel {
 
 	public void setBg(Background bg) {
 		this.bg = bg;
+	}
+	
+	public ArrayList<Bullet> getBullets(){
+		return bullets;
 	}
 
 }

@@ -1,6 +1,6 @@
 package arabictouhou;
 
-import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class Aisha {
 
@@ -21,6 +21,8 @@ public class Aisha {
 
 	private Background bg1 = MainClass.getBg1();
 	private Background bg2 = MainClass.getBg2();
+	
+	private ArrayList<Bullet> bullets = new ArrayList<>();
 
 	public void update() {
 
@@ -119,6 +121,12 @@ public class Aisha {
 		}
 
 	}
+	
+	public void fire(){
+		Bullet b = new Bullet(centerX, centerY + 60);
+		b.setSpeedX(0);
+		bullets.add(b);
+	}
 
 	public int getCenterX() {
 		return centerX;
@@ -186,5 +194,9 @@ public class Aisha {
 
 	public int getBACKGROUND_SPEED() {
 		return BACKGROUND_SPEED;
+	}
+	
+	public ArrayList<Bullet> getBullets(){
+		return bullets;
 	}
 }

@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainClass extends Applet implements Runnable, KeyListener {
 
@@ -64,8 +65,30 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	@Override
 	public void run() {
 		while (true) {
+			// update Aisha
 			aisha.update();
+			// handle her bullets
+			ArrayList<Bullet> aishaBullets = aisha.getBullets();
+			for(int i = 0; i < aishaBullets.size(); i++){
+				Bullet b = (Bullet) aishaBullets.get(i);
+				if(b.isVisible()){
+					b.update();
+				}else{
+					aishaBullets.remove(b);
+				}
+			}
+			// update Rachel
 			rachel.update();
+			// handle her bullets
+			ArrayList<Bullet> rachelBullets = rachel.getBullets();
+			for(int i = 0; i < rachelBullets.size(); i++){
+				Bullet b = (Bullet) rachelBullets.get(i);
+				if(b.isVisible()){
+					b.update();
+				}else{
+					rachelBullets.remove(b);
+				}
+			}
 			bg1.update();
 			bg2.update();
 			repaint();

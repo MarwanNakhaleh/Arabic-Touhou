@@ -9,13 +9,13 @@ public class Bullet {
 		y = startY;
 		visible = true;
 	}
-	
-	public void update(){
+
+	public void update() {
 		y += speedY;
-		if(x > 480 || x < 0){
+		if (x > 480 || x < 0) {
 			visible = false;
 		}
-		if(y > 700 || y < 0){
+		if (y > 700 || y < 0) {
 			visible = false;
 		}
 	}
