@@ -3,6 +3,8 @@ package arabictouhou;
 public class Background {
 	
 	private int bgX, bgY, speedY;
+	private int MAX_HEIGHT = 2160;
+	private int LOOP_FACTOR = -4320;
 	
 	public Background(int x, int y){
 		bgX = x;
@@ -13,8 +15,8 @@ public class Background {
 	public void update() {
 		bgY += speedY;
 
-		if (bgY <= -2160){
-			bgY += 4320;
+		if (bgY >= MAX_HEIGHT){
+			bgY += LOOP_FACTOR;
 		}
 	}
 

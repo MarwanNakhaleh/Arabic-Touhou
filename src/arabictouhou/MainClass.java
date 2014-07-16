@@ -11,6 +11,7 @@ import java.net.URL;
 
 public class MainClass extends Applet implements Runnable, KeyListener {
 
+	private static final long serialVersionUID = 1L;
 	private Aisha aisha;
 	private Image image, character, currentSprite, background;
 	private Graphics second;
@@ -20,7 +21,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	@Override
 	public void init() {
 
-		setSize(480, 800);
+		setSize(480, 700);
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		addKeyListener(this);
