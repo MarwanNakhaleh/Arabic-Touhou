@@ -1,25 +1,24 @@
 package arabictouhou;
 
-public class Background {
-	private int bgX, bgY, speedY;
 
-	// the background will always be scrolling down, giving the illusion that
-	// Aisha is moving up
-	public Background(int x, int y) {
+public class Background {
+	
+	private int bgX, bgY, speedY;
+	
+	public Background(int x, int y){
 		bgX = x;
 		bgY = y;
-		speedY = -2;
+		speedY = 0;
 	}
-
-	// loop a 480 x 2160 background
+	
 	public void update() {
-		bgY += speedY;
-		if (bgY <= -2160) {
+		bgY -= speedY;
+
+		if (bgY <= -2160){
 			bgY += 4320;
 		}
 	}
 
-	// getters and setters are always useful
 	public int getBgX() {
 		return bgX;
 	}
@@ -43,5 +42,5 @@ public class Background {
 	public void setSpeedY(int speedY) {
 		this.speedY = speedY;
 	}
-
+	
 }

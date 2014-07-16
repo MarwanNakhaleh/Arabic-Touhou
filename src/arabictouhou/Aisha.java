@@ -3,49 +3,75 @@ package arabictouhou;
 import java.awt.Graphics;
 
 public class Aisha {
-	// initial position of Aisha's sprite
+
+	// Constants are Here
+	final int BACKGROUND_SPEED = -1;
+	final int MOVESPEED = 5;
+	final int BOTTOM = 600;
+	final int TOP = 350;
+
 	private int centerX = 240;
-	private int centerY = 550;
-	final int moveSpeed = 4;
-
-	// the character will not be moving by default
-	private int speedX = 0;
-	private int speedY = 0;
-
+	private int centerY = BOTTOM;
 	private boolean movingLeft = false;
 	private boolean movingRight = false;
 	private boolean movingUp = false;
 	private boolean movingDown = false;
 
-	private static Background bg1 = MainClass.getBg1();
-	private static Background bg2 = MainClass.getBg2();
+	private int speedX = 0;
+	private int speedY = 0;
+
+	private Background bg1 = MainClass.getBg1();
+	private Background bg2 = MainClass.getBg2();
 
 	public void update() {
-		// remember not to scroll the background with Aisha's movements
 
-		// if speedX is less than 0 and centerX is greater than 40, move Aisha
-		// left
-		if (centerX >= 40 && speedX < 0) {
+		bg1.setSpeedY(BACKGROUND_SPEED);
+		bg2.setSpeedY(BACKGROUND_SPEED);
+
+		// if speedX is less than 0, move the robot backwards but don't scroll
+		// the background
+		if (speedX < 0) {
 			centerX += speedX;
 		}
 
-		// if speedX is greater than 0 and centerX is less than 440, move Aisha
-		// right
-		if (centerX <= 440 && speedX > 0) {
+		// if centerX is less than or equal to 200 and speedX is greater than 0,
+		// move the robot forward on the screen but don't scroll the background
+		// this shit needs refactoring
+		if (centerX <= 450 && speedX > 0) {
 			centerX += speedX;
 		}
 
-		// if speedY is greater than 0 and centerY is less than 740, move Aisha
-		// down
-		if (centerY < 740 && speedY < 0) {
-			centerY += speedY;
+		// stop Aisha at the bottom level
+		centerY += speedY;
+		if (centerY + speedY >= BOTTOM) {
+			centerY = BOTTOM;
+		}
+		
+		// don't let Aisha move too far up either
+		if(centerY + speedY <= TOP){
+			centerY = TOP;
 		}
 
-		// if speedX is less than 0 and centerY is greater than 460, move Aisha
-		// up
-		if (centerY > 460 && speedY < 0) {
-			centerY += speedX;
+		// Prevents going beyond X coordinate of 0
+		if (centerX + speedX <= 30) {
+			centerX = 31;
 		}
+	}
+
+	public void moveRight() {
+		speedX = MOVESPEED;
+	}
+
+	public void moveLeft() {
+		speedX = -MOVESPEED;
+	}
+
+	public void moveDown() {
+		speedY = MOVESPEED;
+	}
+
+	public void moveUp() {
+		speedY = -MOVESPEED;
 	}
 
 	public void stopRight() {
@@ -58,27 +84,17 @@ public class Aisha {
 		stop();
 	}
 
-	public void moveUp() {
-		speedY = -moveSpeed;
-		System.out.println("up");
+	public void stopDown() {
+		setMovingDown(false);
+		stop();
 	}
 
-	public void moveDown() {
-		speedY = moveSpeed;
-		System.out.println("down");
+	public void stopUp() {
+		setMovingUp(false);
+		stop();
 	}
 
-	public void moveLeft() {
-		speedX = -moveSpeed;
-		System.out.println("left");
-	}
-
-	public void moveRight() {
-		speedX = moveSpeed;
-		System.out.println("right");
-	}
-
-	public void stop() {
+	private void stop() {
 		if (isMovingRight() == false && isMovingLeft() == false) {
 			speedX = 0;
 		}
@@ -91,20 +107,20 @@ public class Aisha {
 			moveRight();
 		}
 
-		if (isMovingUp() == false && isMovingDown() == false) {
+		if (isMovingDown() == false && isMovingUp() == false) {
 			speedY = 0;
 		}
 
-		if (isMovingUp() == false && isMovingDown() == true) {
+		if (isMovingDown() == false && isMovingUp() == true) {
+			moveUp();
+		}
+
+		if (isMovingDown() == true && isMovingUp() == false) {
 			moveDown();
 		}
 
-		if (isMovingUp() == true && isMovingDown() == false) {
-			moveUp();
-		}
 	}
 
-	// setters and getters
 	public int getCenterX() {
 		return centerX;
 	}
@@ -137,12 +153,20 @@ public class Aisha {
 		this.speedY = speedY;
 	}
 
+	public boolean isMovingRight() {
+		return movingRight;
+	}
+
+	public void setMovingRight(boolean movingRight) {
+		this.movingRight = movingRight;
+	}
+
 	public boolean isMovingLeft() {
 		return movingLeft;
 	}
 
-	public boolean isMovingRight() {
-		return movingRight;
+	public void setMovingLeft(boolean movingLeft) {
+		this.movingLeft = movingLeft;
 	}
 
 	public boolean isMovingUp() {
@@ -153,14 +177,6 @@ public class Aisha {
 		return movingDown;
 	}
 
-	public void setMovingLeft(boolean movingLeft) {
-		this.movingLeft = movingLeft;
-	}
-
-	public void setMovingRight(boolean movingRight) {
-		this.movingRight = movingRight;
-	}
-
 	public void setMovingUp(boolean movingUp) {
 		this.movingUp = movingUp;
 	}
@@ -169,4 +185,7 @@ public class Aisha {
 		this.movingDown = movingDown;
 	}
 
+	public int getBACKGROUND_SPEED() {
+		return BACKGROUND_SPEED;
+	}
 }
