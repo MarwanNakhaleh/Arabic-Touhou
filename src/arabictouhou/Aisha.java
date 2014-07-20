@@ -3,12 +3,17 @@ package arabictouhou;
 import java.util.ArrayList;
 
 public class Aisha {
+	
+	//Aisha's stats
+	private int maxHealth, currentHealth;
 
+	//constraints on the movement of Aisha and background
 	final int BACKGROUND_SPEED = 1;
 	final int MOVESPEED = 5;
 	final int BOTTOM = 600;
-	final int TOP = 350;
+	final int TOP = 75;
 
+	//aisha's starting position variables
 	private int centerX = 240;
 	private int centerY = BOTTOM;
 	private boolean movingLeft = false;
@@ -16,9 +21,11 @@ public class Aisha {
 	private boolean movingUp = false;
 	private boolean movingDown = false;
 
+	// aisha's starting velocity variables
 	private int speedX = 0;
 	private int speedY = 0;
 
+	// upating the background too
 	private Background bg1 = MainClass.getBg1();
 	private Background bg2 = MainClass.getBg2();
 	

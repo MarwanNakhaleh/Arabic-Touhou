@@ -9,16 +9,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.ArrayList;
+import arabictouhou.framework.Animation;
 
 public class MainClass extends Applet implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Aisha aisha;
 	private Rachel rachel;
-	private Image image, character, enemy, background, aishaBullet;
+	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, aishaCurrent, enemy,
+			background, aishaBullet;
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
+	private Animation aisha_animate;
 
 	@Override
 	public void init() {
@@ -35,12 +38,25 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		} catch (Exception e) {
 			// lel looks like ur fucked m9
 		}
-
-		// images
-		character = getImage(base, "data/Aisha_sprite2.png");
+		// images to animate Aisha
+		aisha1 = getImage(base, "data/Aisha_sprite0.png");
+		aisha2 = getImage(base, "data/Aisha_sprite1.png");
+		aisha3 = getImage(base, "data/Aisha_sprite2.png");
+		aisha4 = getImage(base, "data/Aisha_sprite3.png");
+		aisha5 = getImage(base, "data/Aisha_sprite4.png");
+		//let's get animated!
+		aisha_animate = new Animation();
+		aisha_animate.addFrame(aisha1, 150);
+		aisha_animate.addFrame(aisha2, 150);
+		aisha_animate.addFrame(aisha3, 150);
+		aisha_animate.addFrame(aisha4, 150);
+		aisha_animate.addFrame(aisha5, 150);
+		// everything else
 		enemy = getImage(base, "data/Rachel_sprite0.png");
 		background = getImage(base, "data/background.png");
 		aishaBullet = getImage(base, "data/Aisha_bullet.png");
+		//so the animation actually works
+		aishaCurrent = aisha_animate.getImage();
 	}
 
 	@Override
@@ -70,11 +86,11 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			aisha.update();
 			// handle her bullets
 			ArrayList<Bullet> aishaBullets = aisha.getBullets();
-			for(int i = 0; i < aishaBullets.size(); i++){
+			for (int i = 0; i < aishaBullets.size(); i++) {
 				Bullet b = (Bullet) aishaBullets.get(i);
-				if(b.isVisible()){
+				if (b.isVisible()) {
 					b.update();
-				}else{
+				} else {
 					aishaBullets.remove(b);
 				}
 			}
@@ -82,16 +98,17 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			rachel.update();
 			// handle her bullets
 			ArrayList<Bullet> rachelBullets = rachel.getBullets();
-			for(int i = 0; i < rachelBullets.size(); i++){
+			for (int i = 0; i < rachelBullets.size(); i++) {
 				Bullet b = (Bullet) rachelBullets.get(i);
-				if(b.isVisible()){
+				if (b.isVisible()) {
 					b.update();
-				}else{
+				} else {
 					rachelBullets.remove(b);
 				}
 			}
 			bg1.update();
 			bg2.update();
+			aisha_animate.update(10);
 			repaint();
 			try {
 				Thread.sleep(17);
@@ -119,26 +136,26 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void paint(Graphics g) {
-		//background goes on bottom
+		// background goes on bottom
 		g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
 		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
-		//then Rachel's bullets
+		// then Rachel's bullets
 		ArrayList<Bullet> rachelBullets = rachel.getBullets();
-		for(int i = 0; i < rachelBullets.size(); i++){
+		for (int i = 0; i < rachelBullets.size(); i++) {
 			Bullet b = (Bullet) rachelBullets.get(i);
 			g.setColor(Color.decode("AAAAAA"));
 			g.fillOval(b.getX(), b.getY(), 10, 10);
 		}
-		//then Aisha's bullets
+		// then Aisha's bullets
 		ArrayList<Bullet> aishaBullets = aisha.getBullets();
-		for(int i = 0; i < aishaBullets.size(); i++){
+		for (int i = 0; i < aishaBullets.size(); i++) {
 			Bullet b = (Bullet) aishaBullets.get(i);
 			g.drawImage(aishaBullet, b.getX(), b.getY(), this);
 		}
-		//then Aisha
-		g.drawImage(character, aisha.getCenterX() - 30,
+		// then Aisha
+		g.drawImage(aishaCurrent, aisha.getCenterX() - 30,
 				aisha.getCenterY() - 60, this);
-		//then Rachel
+		// then Rachel
 		g.drawImage(enemy, rachel.getCenterX() - 50, rachel.getCenterY() - 68,
 				this);
 
