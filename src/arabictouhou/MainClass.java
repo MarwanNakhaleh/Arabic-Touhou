@@ -9,6 +9,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import arabictouhou.framework.Animation;
 
 public class MainClass extends Applet implements Runnable, KeyListener {
@@ -16,12 +19,12 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
 	private Aisha aisha;
 	private Rachel rachel;
-	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, aishaCurrent, enemy,
-			background, aishaBullet;
+	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, rachel1, rachel2, rachel3, rachel4, rachel5,
+			enemy, background, aishaBullet;
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
-	private Animation aisha_animate;
+	private Animation aisha_animate, rachel_animate;
 
 	@Override
 	public void init() {
@@ -44,19 +47,31 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		aisha3 = getImage(base, "data/Aisha_sprite2.png");
 		aisha4 = getImage(base, "data/Aisha_sprite3.png");
 		aisha5 = getImage(base, "data/Aisha_sprite4.png");
-		//let's get animated!
+		//images to animate Rachel
+		rachel1 = getImage(base, "data/Rachel_sprite0.png");
+		rachel2 = getImage(base, "data/Rachel_sprite1.png");
+		rachel3 = getImage(base, "data/Rachel_sprite2.png");
+		rachel4 = getImage(base, "data/Rachel_sprite3.png");
+		rachel5 = getImage(base, "data/Rachel_sprite4.png");
+		// let's get animated!
 		aisha_animate = new Animation();
-		aisha_animate.addFrame(aisha1, 50);
-		aisha_animate.addFrame(aisha2, 50);
-		aisha_animate.addFrame(aisha3, 50);
-		aisha_animate.addFrame(aisha4, 50);
-		aisha_animate.addFrame(aisha5, 50);
+		aisha_animate.addFrame(aisha1, 100);
+		aisha_animate.addFrame(aisha2, 100);
+		aisha_animate.addFrame(aisha3, 100);
+		aisha_animate.addFrame(aisha4, 100);
+		aisha_animate.addFrame(aisha5, 100);
+		aisha_animate.addFrame(aisha4, 100);
+		aisha_animate.addFrame(aisha3, 100);
+		aisha_animate.addFrame(aisha2, 100);
+		rachel_animate = new Animation();
+		rachel_animate.addFrame(rachel1, 75);
+		rachel_animate.addFrame(rachel2, 75);
+		rachel_animate.addFrame(rachel3, 75);
+		rachel_animate.addFrame(rachel4, 75);
+		rachel_animate.addFrame(rachel5, 75);
 		// everything else
-		enemy = getImage(base, "data/Rachel_sprite0.png");
 		background = getImage(base, "data/background.png");
 		aishaBullet = getImage(base, "data/Aisha_bullet.png");
-		//so the animation actually works
-		aishaCurrent = aisha_animate.getImage();
 	}
 
 	@Override
@@ -84,7 +99,6 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		while (true) {
 			// update Aisha
 			aisha.update();
-			aishaCurrent = aisha_animate.getImage();
 			// handle her bullets
 			ArrayList<Bullet> aishaBullets = aisha.getBullets();
 			for (int i = 0; i < aishaBullets.size(); i++) {
@@ -110,6 +124,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			bg1.update();
 			bg2.update();
 			aisha_animate.update(10);
+			rachel_animate.update(10);
 			repaint();
 			try {
 				Thread.sleep(17);
@@ -156,8 +171,10 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		// then Aisha
 		g.drawImage(aisha_animate.getImage(), aisha.getCenterX() - 30,
 				aisha.getCenterY() - 60, this);
+		g.drawRect((int) aisha.rec.getX(), (int) aisha.rec.getY(),
+				(int) aisha.rec.getWidth(), (int) aisha.rec.getHeight());
 		// then Rachel
-		g.drawImage(enemy, rachel.getCenterX() - 50, rachel.getCenterY() - 68,
+		g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50, rachel.getCenterY() - 68,
 				this);
 
 	}
@@ -186,12 +203,10 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			aisha.setMovingRight(true);
 			break;
 
-		case KeyEvent.VK_SPACE:
+		case KeyEvent.VK_Z:
 			aisha.fire();
 			break;
-
 		}
-
 	}
 
 	@Override
@@ -213,7 +228,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			aisha.stopRight();
 			break;
 
-		case KeyEvent.VK_SPACE:
+		case KeyEvent.VK_Z:
 			break;
 
 		}

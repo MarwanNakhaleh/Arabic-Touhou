@@ -7,7 +7,6 @@ public class Rachel {
 	private int maxHealth, currentHealth, power, speedX, speedY, centerX, centerY;
 	private Background bg = MainClass.getBg1();
 	private ArrayList<Bullet> bullets = new ArrayList<>();
-	
 	public Rachel(int centerX, int centerY){
 		setCenterX(centerX);
 		setCenterY(centerY);

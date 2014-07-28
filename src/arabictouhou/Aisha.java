@@ -1,8 +1,12 @@
 package arabictouhou;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Aisha {
+	
+	//collision detection
+	public static Rectangle rec = new Rectangle(0,0,0,0);
 	
 	//Aisha's stats
 	private int maxHealth, currentHealth;
@@ -64,6 +68,8 @@ public class Aisha {
 		if (centerX + speedX <= 30) {
 			centerX = 31;
 		}
+		
+		rec.setRect(centerX - 8, centerY - 25, 15, 50);
 	}
 
 	public void moveRight() {
@@ -132,7 +138,7 @@ public class Aisha {
 	public void fire(){
 		Bullet b = new Bullet(centerX - 8, centerY - 60);
 		b.setSpeedX(0);
-		b.setSpeedY(-10);
+		b.setSpeedY(-15);
 		bullets.add(b);
 	}
 
