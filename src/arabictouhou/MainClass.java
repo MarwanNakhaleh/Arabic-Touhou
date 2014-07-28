@@ -46,11 +46,11 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		aisha5 = getImage(base, "data/Aisha_sprite4.png");
 		//let's get animated!
 		aisha_animate = new Animation();
-		aisha_animate.addFrame(aisha1, 150);
-		aisha_animate.addFrame(aisha2, 150);
-		aisha_animate.addFrame(aisha3, 150);
-		aisha_animate.addFrame(aisha4, 150);
-		aisha_animate.addFrame(aisha5, 150);
+		aisha_animate.addFrame(aisha1, 50);
+		aisha_animate.addFrame(aisha2, 50);
+		aisha_animate.addFrame(aisha3, 50);
+		aisha_animate.addFrame(aisha4, 50);
+		aisha_animate.addFrame(aisha5, 50);
 		// everything else
 		enemy = getImage(base, "data/Rachel_sprite0.png");
 		background = getImage(base, "data/background.png");
@@ -84,6 +84,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		while (true) {
 			// update Aisha
 			aisha.update();
+			aishaCurrent = aisha_animate.getImage();
 			// handle her bullets
 			ArrayList<Bullet> aishaBullets = aisha.getBullets();
 			for (int i = 0; i < aishaBullets.size(); i++) {
@@ -153,7 +154,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			g.drawImage(aishaBullet, b.getX(), b.getY(), this);
 		}
 		// then Aisha
-		g.drawImage(aishaCurrent, aisha.getCenterX() - 30,
+		g.drawImage(aisha_animate.getImage(), aisha.getCenterX() - 30,
 				aisha.getCenterY() - 60, this);
 		// then Rachel
 		g.drawImage(enemy, rachel.getCenterX() - 50, rachel.getCenterY() - 68,

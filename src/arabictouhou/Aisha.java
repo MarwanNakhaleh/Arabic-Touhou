@@ -11,7 +11,7 @@ public class Aisha {
 	final int BACKGROUND_SPEED = 1;
 	final int MOVESPEED = 5;
 	final int BOTTOM = 600;
-	final int TOP = 75;
+	final int TOP = 50;
 
 	//aisha's starting position variables
 	private int centerX = 240;
