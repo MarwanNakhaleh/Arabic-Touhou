@@ -9,7 +9,7 @@ public class Aisha {
 	public static Rectangle rec = new Rectangle(0, 0, 0, 0);
 
 	// Aisha's stats
-	// private int maxHealth, currentHealth;
+	private int maxHealth, currentHealth;
 
 	// constraints on the movement of Aisha and background
 	final int BACKGROUND_SPEED = 1;
@@ -213,4 +213,21 @@ public class Aisha {
 	public ArrayList<Bullet> getBullets() {
 		return bullets;
 	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public int getCurrentHealth() {
+		return currentHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
+
+	public void setCurrentHealth(int currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+
 }

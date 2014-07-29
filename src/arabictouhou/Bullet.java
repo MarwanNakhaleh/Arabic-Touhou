@@ -1,22 +1,37 @@
 package arabictouhou;
 
+import java.awt.Rectangle;
+
 public class Bullet {
 	private int x, y, speedX, speedY;
 	private boolean visible;
+	public static Rectangle rec;
 
 	public Bullet(int startX, int startY) {
 		x = startX;
 		y = startY;
 		visible = true;
+		rec = new Rectangle(0, 0, 0, 0);
 	}
 
 	public void update() {
 		y += speedY;
-		if (x > 480 || x < 0) {
+		rec.setBounds(x, y, 10, 5);
+		if (y > 700) {
 			visible = false;
+			rec = null;
 		}
-		if (y > 700 || y < 0) {
+		if (y < 801) {
+			checkCollision();
+		}
+	}
+
+	public void checkCollision() {
+		if (rec.intersects(Rachel.recParent)
+				|| rec.intersects(Rachel.recChild0)
+				|| rec.intersects(Rachel.recChild1)) {
 			visible = false;
+			MainClass.setScore(MainClass.getScore() + 1);
 		}
 	}
 

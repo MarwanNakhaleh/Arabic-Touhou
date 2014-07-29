@@ -2,6 +2,7 @@ package arabictouhou;
 
 import java.applet.Applet;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,13 +17,16 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Aisha aisha;
-	private Rachel rachel;
-	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, rachel1, rachel2, rachel3,
-			background, aishaBullet;
+	public static Rachel rachel;
+	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, rachel1,
+			rachel2, rachel3, background, aishaBullet;
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
 	private Animation aisha_animate, rachel_animate;
+	//stats
+	public static int score;
+	private Font font = new Font(null, Font.BOLD, 30);
 
 	@Override
 	public void init() {
@@ -101,7 +105,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 				if (b.isVisible()) {
 					b.update();
 				} else {
-					aishaBullets.remove(b);
+					aishaBullets.remove(i);
 				}
 			}
 			// update Rachel
@@ -155,30 +159,42 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		for (int i = 0; i < rachelBullets.size(); i++) {
 			Bullet b = (Bullet) rachelBullets.get(i);
 			g.setColor(Color.decode("AAAAAA"));
-			g.fillOval(b.getX(), b.getY(), 10, 10);
+			g.fillOval(b.getX(), b.getY(), 15, 15);
 		}
 		// then Aisha's bullets
 		ArrayList<Bullet> aishaBullets = aisha.getBullets();
 		for (int i = 0; i < aishaBullets.size(); i++) {
 			Bullet b = (Bullet) aishaBullets.get(i);
 			g.drawImage(aishaBullet, b.getX(), b.getY(), this);
+			// g.drawRect((int) b.getX(), (int) b.getX(), 15, 15);
 		}
 		// then Aisha
 		g.drawImage(aisha_animate.getImage(), aisha.getCenterX() - 30,
 				aisha.getCenterY() - 60, this);
 		// draw rectangles for testing purposes
-		g.drawRect((int) Aisha.rec.getX(), (int) Aisha.rec.getY(),
-				(int) Aisha.rec.getWidth(), (int) Aisha.rec.getHeight());
+		/* g.drawRect((int) Aisha.rec.getX(), (int) Aisha.rec.getY(),
+				(int) Aisha.rec.getWidth(), (int) Aisha.rec.getHeight()); */
 		// then Rachel
-		g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50, rachel.getCenterY() - 68,
-				this);
+		g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50,
+				rachel.getCenterY() - 68, this);
 		// no circles shall be drawn
-		g.drawRect((int) Rachel.recParent.getX(), (int) Rachel.recParent.getY(),
-				(int) Rachel.recParent.getWidth(), (int) Rachel.recParent.getHeight());
-		g.drawRect((int) Rachel.recChild0.getX(), (int) Rachel.recChild0.getY(),
-				(int) Rachel.recChild0.getWidth(), (int) Rachel.recChild0.getHeight());
-		g.drawRect((int) Rachel.recChild1.getX(), (int) Rachel.recChild1.getY(),
-				(int) Rachel.recChild1.getWidth(), (int) Rachel.recChild1.getHeight());
+		/* g.drawRect((int) Rachel.recParent.getX(),
+				(int) Rachel.recParent.getY(),
+				(int) Rachel.recParent.getWidth(),
+				(int) Rachel.recParent.getHeight());
+		g.drawRect((int) Rachel.recChild0.getX(),
+				(int) Rachel.recChild0.getY(),
+				(int) Rachel.recChild0.getWidth(),
+				(int) Rachel.recChild0.getHeight());
+		g.drawRect((int) Rachel.recChild1.getX(),
+				(int) Rachel.recChild1.getY(),
+				(int) Rachel.recChild1.getWidth(),
+				(int) Rachel.recChild1.getHeight());
+		*/
+		// draw score
+		g.setFont(font);
+		g.setColor(Color.WHITE);
+		g.drawString(Integer.toString(score), 400, 30);	
 
 	}
 
@@ -250,6 +266,14 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	public static Background getBg2() {
 		return bg2;
+	}
+
+	public static int getScore() {
+		return score;
+	}
+
+	public static void setScore(int s) {
+		score = s;
 	}
 
 }
