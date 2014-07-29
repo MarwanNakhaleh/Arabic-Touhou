@@ -26,12 +26,12 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	private Animation aisha_animate, rachel_animate;
 	//stats
 	public static int score;
-	private Font font = new Font(null, Font.BOLD, 30);
+	private Font font = new Font(null, Font.BOLD, 15);
 
 	@Override
 	public void init() {
 
-		setSize(480, 700);
+		setSize(800, 700);
 		setBackground(Color.BLACK);
 		setFocusable(true);
 		addKeyListener(this);
@@ -194,7 +194,8 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		// draw score
 		g.setFont(font);
 		g.setColor(Color.WHITE);
-		g.drawString(Integer.toString(score), 400, 30);	
+		g.drawString("Score: ", 500, 30);
+		g.drawString(Integer.toString(score), 560, 30);	
 
 	}
 
