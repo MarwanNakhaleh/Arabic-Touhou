@@ -27,11 +27,19 @@ public class Bullet {
 	}
 
 	public void checkCollision() {
-		if (rec.intersects(Rachel.recParent)
-				|| rec.intersects(Rachel.recChild0)
-				|| rec.intersects(Rachel.recChild1)) {
+		if (rec.intersects(MainClass.rachel.recParent)
+				|| rec.intersects(MainClass.rachel.recChild0)
+				|| rec.intersects(MainClass.rachel.recChild1)) {
 			visible = false;
-			MainClass.setScore(MainClass.getScore() + 1);
+			if (MainClass.rachel.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.rachel.setCurrentHealth(MainClass.rachel
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.rachel.getCurrentHealth() == 0){
+				MainClass.rachel.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 100);
+			}
 		}
 	}
 

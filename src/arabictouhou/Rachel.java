@@ -6,19 +6,20 @@ import java.util.ArrayList;
 public class Rachel {
 
 	// stats and positioning
-	private int maxHealth, currentHealth, power, speedX, speedY, centerX,
-			centerY;
+	private int maxHealth = 100;
+	private int currentHealth, power, speedX, speedY, centerX, centerY;
 	// other necessities
 	private Background bg = MainClass.getBg1();
 	private ArrayList<Bullet> bullets = new ArrayList<>();
 	// rectangles for collisions
-	public static Rectangle recParent = new Rectangle(0, 0, 0, 0);
-	public static Rectangle recChild0 = new Rectangle(0, 0, 0, 0);
-	public static Rectangle recChild1 = new Rectangle(0, 0, 0, 0);
+	public Rectangle recParent = new Rectangle(0, 0, 0, 0);
+	public Rectangle recChild0 = new Rectangle(0, 0, 0, 0);
+	public Rectangle recChild1 = new Rectangle(0, 0, 0, 0);
 
 	public Rachel(int centerX, int centerY) {
 		setCenterX(centerX);
 		setCenterY(centerY);
+		currentHealth = maxHealth;
 	}
 
 	public void update() {
