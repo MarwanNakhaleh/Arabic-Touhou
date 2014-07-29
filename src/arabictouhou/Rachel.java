@@ -1,27 +1,39 @@
 package arabictouhou;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Rachel {
 
-	private int maxHealth, currentHealth, power, speedX, speedY, centerX, centerY;
+	// stats and positioning
+	private int maxHealth, currentHealth, power, speedX, speedY, centerX,
+			centerY;
+	// other necessities
 	private Background bg = MainClass.getBg1();
 	private ArrayList<Bullet> bullets = new ArrayList<>();
-	public Rachel(int centerX, int centerY){
+	// rectangles for collisions
+	public static Rectangle recParent = new Rectangle(0, 0, 0, 0);
+	public static Rectangle recChild0 = new Rectangle(0, 0, 0, 0);
+	public static Rectangle recChild1 = new Rectangle(0, 0, 0, 0);
+
+	public Rachel(int centerX, int centerY) {
 		setCenterX(centerX);
 		setCenterY(centerY);
 	}
-	
-	public void update(){
+
+	public void update() {
 		speedY = bg.getSpeedY();
+		recParent.setRect(centerX - 47, centerY - 65, 90, 95);
+		recChild0.setRect(centerX - 47, centerY + 30, 30, 30);
+		recChild1.setRect(centerX + 13, centerY + 30, 30, 30);
 	}
-	
-	public void die(){
-		
+
+	public void die() {
+
 	}
-	
-	public void attack(){
-		
+
+	public void attack() {
+
 	}
 
 	public int getMaxHealth() {
@@ -87,8 +99,8 @@ public class Rachel {
 	public void setBg(Background bg) {
 		this.bg = bg;
 	}
-	
-	public ArrayList<Bullet> getBullets(){
+
+	public ArrayList<Bullet> getBullets() {
 		return bullets;
 	}
 

@@ -9,8 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import arabictouhou.framework.Animation;
 
@@ -19,8 +17,8 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	private static final long serialVersionUID = 1L;
 	private Aisha aisha;
 	private Rachel rachel;
-	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, rachel1, rachel2, rachel3, rachel4, rachel5,
-			enemy, background, aishaBullet;
+	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, rachel1, rachel2, rachel3,
+			background, aishaBullet;
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
@@ -34,8 +32,8 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		setFocusable(true);
 		addKeyListener(this);
 		Frame frame = (Frame) this.getParent().getParent();
-		// I still need a better title, I think
-		frame.setTitle("Devil's Cabana Girls: Army of Sluts");
+		// still working on that title lolol
+		frame.setTitle("The Everlasting Fighter Within");
 		try {
 			base = getDocumentBase();
 		} catch (Exception e) {
@@ -47,12 +45,10 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		aisha3 = getImage(base, "data/Aisha_sprite2.png");
 		aisha4 = getImage(base, "data/Aisha_sprite3.png");
 		aisha5 = getImage(base, "data/Aisha_sprite4.png");
-		//images to animate Rachel
+		// images to animate Rachel
 		rachel1 = getImage(base, "data/Rachel_sprite0.png");
 		rachel2 = getImage(base, "data/Rachel_sprite1.png");
 		rachel3 = getImage(base, "data/Rachel_sprite2.png");
-		rachel4 = getImage(base, "data/Rachel_sprite3.png");
-		rachel5 = getImage(base, "data/Rachel_sprite4.png");
 		// let's get animated!
 		aisha_animate = new Animation();
 		aisha_animate.addFrame(aisha1, 100);
@@ -64,11 +60,10 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		aisha_animate.addFrame(aisha3, 100);
 		aisha_animate.addFrame(aisha2, 100);
 		rachel_animate = new Animation();
-		rachel_animate.addFrame(rachel1, 75);
-		rachel_animate.addFrame(rachel2, 75);
-		rachel_animate.addFrame(rachel3, 75);
-		rachel_animate.addFrame(rachel4, 75);
-		rachel_animate.addFrame(rachel5, 75);
+		rachel_animate.addFrame(rachel2, 100);
+		rachel_animate.addFrame(rachel1, 100);
+		rachel_animate.addFrame(rachel3, 100);
+		rachel_animate.addFrame(rachel1, 100);
 		// everything else
 		background = getImage(base, "data/background.png");
 		aishaBullet = getImage(base, "data/Aisha_bullet.png");
@@ -171,11 +166,19 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		// then Aisha
 		g.drawImage(aisha_animate.getImage(), aisha.getCenterX() - 30,
 				aisha.getCenterY() - 60, this);
-		g.drawRect((int) aisha.rec.getX(), (int) aisha.rec.getY(),
-				(int) aisha.rec.getWidth(), (int) aisha.rec.getHeight());
+		// draw rectangles for testing purposes
+		g.drawRect((int) Aisha.rec.getX(), (int) Aisha.rec.getY(),
+				(int) Aisha.rec.getWidth(), (int) Aisha.rec.getHeight());
 		// then Rachel
 		g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50, rachel.getCenterY() - 68,
 				this);
+		// no circles shall be drawn
+		g.drawRect((int) Rachel.recParent.getX(), (int) Rachel.recParent.getY(),
+				(int) Rachel.recParent.getWidth(), (int) Rachel.recParent.getHeight());
+		g.drawRect((int) Rachel.recChild0.getX(), (int) Rachel.recChild0.getY(),
+				(int) Rachel.recChild0.getWidth(), (int) Rachel.recChild0.getHeight());
+		g.drawRect((int) Rachel.recChild1.getX(), (int) Rachel.recChild1.getY(),
+				(int) Rachel.recChild1.getWidth(), (int) Rachel.recChild1.getHeight());
 
 	}
 

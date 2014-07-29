@@ -4,20 +4,20 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Aisha {
-	
-	//collision detection
-	public static Rectangle rec = new Rectangle(0,0,0,0);
-	
-	//Aisha's stats
-	private int maxHealth, currentHealth;
 
-	//constraints on the movement of Aisha and background
+	// collision detection
+	public static Rectangle rec = new Rectangle(0, 0, 0, 0);
+
+	// Aisha's stats
+	// private int maxHealth, currentHealth;
+
+	// constraints on the movement of Aisha and background
 	final int BACKGROUND_SPEED = 1;
 	final int MOVESPEED = 5;
 	final int BOTTOM = 600;
 	final int TOP = 50;
 
-	//aisha's starting position variables
+	// aisha's starting position variables
 	private int centerX = 240;
 	private int centerY = BOTTOM;
 	private boolean movingLeft = false;
@@ -32,7 +32,7 @@ public class Aisha {
 	// upating the background too
 	private Background bg1 = MainClass.getBg1();
 	private Background bg2 = MainClass.getBg2();
-	
+
 	private ArrayList<Bullet> bullets = new ArrayList<>();
 
 	public void update() {
@@ -58,9 +58,9 @@ public class Aisha {
 		if (centerY + speedY >= BOTTOM) {
 			centerY = BOTTOM;
 		}
-		
+
 		// don't let Aisha move too far up either
-		if(centerY + speedY <= TOP){
+		if (centerY + speedY <= TOP) {
 			centerY = TOP;
 		}
 
@@ -68,7 +68,7 @@ public class Aisha {
 		if (centerX + speedX <= 30) {
 			centerX = 31;
 		}
-		
+
 		rec.setRect(centerX - 8, centerY - 25, 15, 50);
 	}
 
@@ -134,8 +134,8 @@ public class Aisha {
 		}
 
 	}
-	
-	public void fire(){
+
+	public void fire() {
 		Bullet b = new Bullet(centerX - 8, centerY - 60);
 		b.setSpeedX(0);
 		b.setSpeedY(-15);
@@ -209,8 +209,8 @@ public class Aisha {
 	public int getBACKGROUND_SPEED() {
 		return BACKGROUND_SPEED;
 	}
-	
-	public ArrayList<Bullet> getBullets(){
+
+	public ArrayList<Bullet> getBullets() {
 		return bullets;
 	}
 }
