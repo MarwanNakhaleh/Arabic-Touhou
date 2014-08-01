@@ -36,7 +36,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		setFocusable(true);
 		addKeyListener(this);
 		Frame frame = (Frame) this.getParent().getParent();
-		// I might actually be goo on the title now
+		// I might actually be good on the title now
 		frame.setTitle("Tenth Circle of Hell");
 		try {
 			base = getDocumentBase();
