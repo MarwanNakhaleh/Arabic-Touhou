@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Rachel {
 
 	// stats and positioning
-	private int maxHealth = 100;
+	private int maxHealth = 200;
 	private int currentHealth, power, speedX, speedY, centerX, centerY;
 	// other necessities
 	private Background bg = MainClass.getBg1();

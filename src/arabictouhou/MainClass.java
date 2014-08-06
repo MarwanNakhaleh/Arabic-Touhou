@@ -19,12 +19,13 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	private Aisha aisha;
 	public static Rachel rachel;
 	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, rachel1,
-			rachel2, rachel3, background, aishaBullet;
+			rachel2, rachel3, background;
+	private Image aishaBullet, aishaHealth, aishaSpell;
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
 	private Animation aisha_animate, rachel_animate;
-	//stats
+	// stats
 	public static int score;
 	private Font font = new Font(null, Font.BOLD, 15);
 
@@ -71,6 +72,9 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		// everything else
 		background = getImage(base, "data/background.png");
 		aishaBullet = getImage(base, "data/Aisha_bullet.png");
+		aishaHealth = getImage(base, "data/Aisha_health.png");
+		aishaSpell = getImage(base, "data/Aisha_spell.png");
+
 	}
 
 	@Override
@@ -172,31 +176,43 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		g.drawImage(aisha_animate.getImage(), aisha.getCenterX() - 30,
 				aisha.getCenterY() - 60, this);
 		// draw rectangles for testing purposes
-		/* g.drawRect((int) Aisha.rec.getX(), (int) Aisha.rec.getY(),
-				(int) Aisha.rec.getWidth(), (int) Aisha.rec.getHeight()); */
+		/*
+		 * g.drawRect((int) Aisha.rec.getX(), (int) Aisha.rec.getY(), (int)
+		 * Aisha.rec.getWidth(), (int) Aisha.rec.getHeight());
+		 */
 		// then Rachel
 		g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50,
 				rachel.getCenterY() - 68, this);
 		// no circles shall be drawn
-		/* g.drawRect((int) Rachel.recParent.getX(),
-				(int) Rachel.recParent.getY(),
-				(int) Rachel.recParent.getWidth(),
-				(int) Rachel.recParent.getHeight());
-		g.drawRect((int) Rachel.recChild0.getX(),
-				(int) Rachel.recChild0.getY(),
-				(int) Rachel.recChild0.getWidth(),
-				(int) Rachel.recChild0.getHeight());
-		g.drawRect((int) Rachel.recChild1.getX(),
-				(int) Rachel.recChild1.getY(),
-				(int) Rachel.recChild1.getWidth(),
-				(int) Rachel.recChild1.getHeight());
-		*/
+		/*
+		 * g.drawRect((int) Rachel.recParent.getX(), (int)
+		 * Rachel.recParent.getY(), (int) Rachel.recParent.getWidth(), (int)
+		 * Rachel.recParent.getHeight()); g.drawRect((int)
+		 * Rachel.recChild0.getX(), (int) Rachel.recChild0.getY(), (int)
+		 * Rachel.recChild0.getWidth(), (int) Rachel.recChild0.getHeight());
+		 * g.drawRect((int) Rachel.recChild1.getX(), (int)
+		 * Rachel.recChild1.getY(), (int) Rachel.recChild1.getWidth(), (int)
+		 * Rachel.recChild1.getHeight());
+		 */
 		// draw score
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.drawString("Score: ", 500, 30);
-		g.drawString(Integer.toString(score), 560, 30);	
-
+		g.drawString(Integer.toString(score), 575, 30);
+		// draw health
+		g.drawString("Health: ", 500, 60);
+		int healthStartX = 575;
+		for (int i = 0; i < aisha.getCurrentHealth(); i++) {
+			g.drawImage(aishaHealth, healthStartX, 48, this);
+			healthStartX += 25;
+		}
+		healthStartX = 575;
+		// draw Spell
+		g.drawString("Spell: ", 500, 90);
+		for (int i = 0; i < aisha.getCurrentSpell(); i++) {
+			g.drawImage(aishaSpell, healthStartX, 78, this);
+			healthStartX += 25;
+		}
 	}
 
 	@Override
@@ -225,6 +241,13 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 		case KeyEvent.VK_Z:
 			aisha.fire();
+			break;
+		
+		case KeyEvent.VK_X:
+			if(aisha.getCurrentSpell() > 0){
+				aisha.spell();
+			}
+			aisha.setCurrentSpell(aisha.getCurrentSpell() - 1);
 			break;
 		}
 	}

@@ -15,6 +15,7 @@ public class Bullet {
 	}
 
 	public void update() {
+		x += speedX;
 		y += speedY;
 		rec.setBounds(x, y, 10, 5);
 		if (y > 700) {

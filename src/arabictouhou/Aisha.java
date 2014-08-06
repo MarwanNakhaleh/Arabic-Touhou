@@ -9,7 +9,8 @@ public class Aisha {
 	public static Rectangle rec = new Rectangle(0, 0, 0, 0);
 
 	// Aisha's stats
-	private int maxHealth, currentHealth;
+	private int currentHealth = 5;
+	private int currentSpell = 3;
 
 	// constraints on the movement of Aisha and background
 	final int BACKGROUND_SPEED = 1;
@@ -141,6 +142,36 @@ public class Aisha {
 		b.setSpeedY(-15);
 		bullets.add(b);
 	}
+	
+	public void spell(){
+		int perimeterX = MainClass.rachel.getCenterX() - 50;
+		int perimeterY = MainClass.rachel.getCenterY() + 125;
+		for(int i = 0; i < 10; i++){
+			Bullet b = new Bullet(perimeterX, perimeterY);
+			bullets.add(b);
+			b.setSpeedX(0);
+			b.setSpeedY(-8);
+			perimeterX += 10;
+		}
+		perimeterX = MainClass.rachel.getCenterX() - 100;
+		perimeterY = MainClass.rachel.getCenterY() + 45;
+		for(int i = 0; i < 12; i++){
+			Bullet b = new Bullet(perimeterX, perimeterY);
+			bullets.add(b);
+			b.setSpeedX(8);
+			b.setSpeedY(0);
+			perimeterY -= 10;
+		}
+		perimeterX = MainClass.rachel.getCenterX() + 100;
+		perimeterY = MainClass.rachel.getCenterY() + 45;
+		for(int i = 0; i < 12; i++){
+			Bullet b = new Bullet(perimeterX, perimeterY);
+			bullets.add(b);
+			b.setSpeedX(-8);
+			b.setSpeedY(0);
+			perimeterY -= 10;
+		}
+	}
 
 	public int getCenterX() {
 		return centerX;
@@ -214,20 +245,20 @@ public class Aisha {
 		return bullets;
 	}
 
-	public int getMaxHealth() {
-		return maxHealth;
-	}
-
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
 
-	public void setMaxHealth(int maxHealth) {
-		this.maxHealth = maxHealth;
-	}
-
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
+	}
+	
+	public int getCurrentSpell() {
+		return currentSpell;
+	}
+
+	public void setCurrentSpell(int currentSpell) {
+		this.currentSpell = currentSpell;
 	}
 
 }
