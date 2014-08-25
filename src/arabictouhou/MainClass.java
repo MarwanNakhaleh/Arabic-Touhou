@@ -221,15 +221,10 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			g.drawImage(aisha_animate.getImage(), getAisha().getCenterX() - 30,
 					getAisha().getCenterY() - 60, this);
 			// then JIDF
-			g.drawImage(jidf, jidf1.getCenterX() - 13, jidf1.getCenterY() - 29, this);
-			g.drawImage(jidf, jidf2.getCenterX() - 13, jidf2.getCenterY() - 29, this);
-			g.drawImage(jidf, jidf3.getCenterX() - 13, jidf3.getCenterY() - 29, this);
-			g.drawImage(jidf, jidf4.getCenterX() - 13, jidf4.getCenterY() - 29, this);
-			g.drawImage(jidf, jidf5.getCenterX() - 13, jidf5.getCenterY() - 29, this);
-			g.drawImage(jidf, jidf6.getCenterX() - 13, jidf6.getCenterY() - 29, this);
-			g.drawImage(jidf, jidf7.getCenterX() - 13, jidf7.getCenterY() - 29, this);
-			g.drawImage(jidf, jidf8.getCenterX() - 13, jidf8.getCenterY() - 29, this);
-			g.drawImage(jidf, jidf9.getCenterX() - 13, jidf9.getCenterY() - 29, this);
+			for(int i = 0; i < idf.size(); i++){
+				JIDF IDF = (JIDF) idf.get(i);
+				g.drawImage(jidf, IDF.getCenterX() - 13, IDF.getCenterY() - 29, this);
+			}
 			// then Rachel
 			g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50,
 					rachel.getCenterY() - 68, this);
