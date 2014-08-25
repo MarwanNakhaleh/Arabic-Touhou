@@ -15,12 +15,20 @@ import arabictouhou.framework.Animation;
 
 public class MainClass extends Applet implements Runnable, KeyListener {
 
+	enum GameState {
+		Running, Dead
+	}
+
+	GameState state = GameState.Running;
 	private static final long serialVersionUID = 1L;
-	private Aisha aisha;
+	public static Aisha aisha;
 	public static Rachel rachel;
-	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, rachel1,
-			rachel2, rachel3, background;
-	private Image aishaBullet, aishaHealth, aishaSpell;
+	public static JIDF jidf1, jidf2, jidf3, jidf4, jidf5, jidf6, jidf7, jidf8,
+			jidf9;
+	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, aishaBullet,
+			aishaHealth, aishaSpell;
+	private Image rachel1, rachel2, rachel3, jidf;
+	private Image background;
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
@@ -31,7 +39,6 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void init() {
-
 		setSize(800, 700);
 		setBackground(Color.BLACK);
 		setFocusable(true);
@@ -54,6 +61,8 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		rachel1 = getImage(base, "data/Rachel_sprite0.png");
 		rachel2 = getImage(base, "data/Rachel_sprite1.png");
 		rachel3 = getImage(base, "data/Rachel_sprite2.png");
+		// JIDF
+		jidf = getImage(base, "data/enemy1.png");
 		// let's get animated!
 		aisha_animate = new Animation();
 		aisha_animate.addFrame(aisha1, 100);
@@ -83,6 +92,15 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		bg2 = new Background(0, -2160);
 		aisha = new Aisha();
 		rachel = new Rachel(240, 75);
+		jidf1 = new JIDF(240, 300);
+		jidf2 = new JIDF(200, 250);
+		jidf3 = new JIDF(280, 250);
+		jidf4 = new JIDF(160, 200);
+		jidf5 = new JIDF(320, 200);
+		jidf6 = new JIDF(120, 150);
+		jidf7 = new JIDF(360, 150);
+		jidf8 = new JIDF(80, 100);
+		jidf9 = new JIDF(400, 100);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -99,40 +117,55 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void run() {
-		while (true) {
-			// update Aisha
-			aisha.update();
-			// handle her bullets
-			ArrayList<Bullet> aishaBullets = aisha.getBullets();
-			for (int i = 0; i < aishaBullets.size(); i++) {
-				Bullet b = (Bullet) aishaBullets.get(i);
-				if (b.isVisible()) {
-					b.update();
-				} else {
-					aishaBullets.remove(i);
+		if (state == GameState.Running) {
+			while (true) {
+				// update Aisha
+				getAisha().update();
+				// handle her bullets
+				ArrayList<Bullet> aishaBullets = getAisha().getBullets();
+				for (int i = 0; i < aishaBullets.size(); i++) {
+					Bullet b = (Bullet) aishaBullets.get(i);
+					if (b.isVisible()) {
+						b.update();
+					} else {
+						aishaBullets.remove(i);
+					}
 				}
-			}
-			// update Rachel
-			rachel.update();
-			// handle her bullets
-			ArrayList<Bullet> rachelBullets = rachel.getBullets();
-			for (int i = 0; i < rachelBullets.size(); i++) {
-				Bullet b = (Bullet) rachelBullets.get(i);
-				if (b.isVisible()) {
-					b.update();
-				} else {
-					rachelBullets.remove(b);
+				// update Rachel
+				rachel.update();
+				// handle her bullets
+				ArrayList<Bullet> rachelBullets = rachel.getBullets();
+				for (int i = 0; i < rachelBullets.size(); i++) {
+					Bullet b = (Bullet) rachelBullets.get(i);
+					if (b.isVisible()) {
+						b.update();
+					} else {
+						rachelBullets.remove(b);
+					}
 				}
-			}
-			bg1.update();
-			bg2.update();
-			aisha_animate.update(10);
-			rachel_animate.update(10);
-			repaint();
-			try {
-				Thread.sleep(17);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				//update JIDF
+				jidf1.update();
+				jidf2.update();
+				jidf3.update();
+				jidf4.update();
+				jidf5.update();
+				jidf6.update();
+				jidf7.update();
+				jidf8.update();
+				jidf9.update();
+				bg1.update();
+				bg2.update();
+				aisha_animate.update(10);
+				rachel_animate.update(10);
+				repaint();
+				try {
+					Thread.sleep(17);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (getAisha().getCurrentHealth() == 0) {
+					state = GameState.Dead;
+				}
 			}
 		}
 	}
@@ -143,75 +176,73 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			image = createImage(this.getWidth(), this.getHeight());
 			second = image.getGraphics();
 		}
-
 		second.setColor(getBackground());
 		second.fillRect(0, 0, getWidth(), getHeight());
 		second.setColor(getForeground());
 		paint(second);
-
 		g.drawImage(image, 0, 0, this);
 
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		// background goes on bottom
-		g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
-		g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
-		// then Rachel's bullets
-		ArrayList<Bullet> rachelBullets = rachel.getBullets();
-		for (int i = 0; i < rachelBullets.size(); i++) {
-			Bullet b = (Bullet) rachelBullets.get(i);
-			g.setColor(Color.decode("AAAAAA"));
-			g.fillOval(b.getX(), b.getY(), 15, 15);
-		}
-		// then Aisha's bullets
-		ArrayList<Bullet> aishaBullets = aisha.getBullets();
-		for (int i = 0; i < aishaBullets.size(); i++) {
-			Bullet b = (Bullet) aishaBullets.get(i);
-			g.drawImage(aishaBullet, b.getX(), b.getY(), this);
-			// g.drawRect((int) b.getX(), (int) b.getX(), 15, 15);
-		}
-		// then Aisha
-		g.drawImage(aisha_animate.getImage(), aisha.getCenterX() - 30,
-				aisha.getCenterY() - 60, this);
-		// draw rectangles for testing purposes
-		/*
-		 * g.drawRect((int) Aisha.rec.getX(), (int) Aisha.rec.getY(), (int)
-		 * Aisha.rec.getWidth(), (int) Aisha.rec.getHeight());
-		 */
-		// then Rachel
-		g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50,
-				rachel.getCenterY() - 68, this);
-		// no circles shall be drawn
-		/*
-		 * g.drawRect((int) Rachel.recParent.getX(), (int)
-		 * Rachel.recParent.getY(), (int) Rachel.recParent.getWidth(), (int)
-		 * Rachel.recParent.getHeight()); g.drawRect((int)
-		 * Rachel.recChild0.getX(), (int) Rachel.recChild0.getY(), (int)
-		 * Rachel.recChild0.getWidth(), (int) Rachel.recChild0.getHeight());
-		 * g.drawRect((int) Rachel.recChild1.getX(), (int)
-		 * Rachel.recChild1.getY(), (int) Rachel.recChild1.getWidth(), (int)
-		 * Rachel.recChild1.getHeight());
-		 */
-		// draw score
-		g.setFont(font);
-		g.setColor(Color.WHITE);
-		g.drawString("Score: ", 500, 30);
-		g.drawString(Integer.toString(score), 575, 30);
-		// draw health
-		g.drawString("Health: ", 500, 60);
-		int healthStartX = 575;
-		for (int i = 0; i < aisha.getCurrentHealth(); i++) {
-			g.drawImage(aishaHealth, healthStartX, 48, this);
-			healthStartX += 25;
-		}
-		healthStartX = 575;
-		// draw Spell
-		g.drawString("Spell: ", 500, 90);
-		for (int i = 0; i < aisha.getCurrentSpell(); i++) {
-			g.drawImage(aishaSpell, healthStartX, 78, this);
-			healthStartX += 25;
+		if (state == GameState.Running) {
+			// background goes on bottom
+			g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
+			g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
+			// then Rachel's bullets
+			ArrayList<Bullet> rachelBullets = rachel.getBullets();
+			for (int i = 0; i < rachelBullets.size(); i++) {
+				Bullet b = (Bullet) rachelBullets.get(i);
+				g.setColor(Color.decode("AAAAAA"));
+				g.fillOval(b.getX(), b.getY(), 15, 15);
+			}
+			// then Aisha's bullets
+			ArrayList<Bullet> aishaBullets = getAisha().getBullets();
+			for (int i = 0; i < aishaBullets.size(); i++) {
+				Bullet b = (Bullet) aishaBullets.get(i);
+				g.drawImage(aishaBullet, b.getX(), b.getY(), this);
+			}
+			// then Aisha
+			g.drawImage(aisha_animate.getImage(), getAisha().getCenterX() - 30,
+					getAisha().getCenterY() - 60, this);
+			// then JIDF
+			g.drawImage(jidf, jidf1.getCenterX() - 13, jidf1.getCenterY() - 29, this);
+			g.drawImage(jidf, jidf2.getCenterX() - 13, jidf2.getCenterY() - 29, this);
+			g.drawImage(jidf, jidf3.getCenterX() - 13, jidf3.getCenterY() - 29, this);
+			g.drawImage(jidf, jidf4.getCenterX() - 13, jidf4.getCenterY() - 29, this);
+			g.drawImage(jidf, jidf5.getCenterX() - 13, jidf5.getCenterY() - 29, this);
+			g.drawImage(jidf, jidf6.getCenterX() - 13, jidf6.getCenterY() - 29, this);
+			g.drawImage(jidf, jidf7.getCenterX() - 13, jidf7.getCenterY() - 29, this);
+			g.drawImage(jidf, jidf8.getCenterX() - 13, jidf8.getCenterY() - 29, this);
+			g.drawImage(jidf, jidf9.getCenterX() - 13, jidf9.getCenterY() - 29, this);
+			// then Rachel
+			g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50,
+					rachel.getCenterY() - 68, this);
+			// draw score
+			g.setFont(font);
+			g.setColor(Color.WHITE);
+			g.drawString("Score: ", 500, 30);
+			g.drawString(Integer.toString(score), 575, 30);
+			// draw health
+			g.drawString("Health: ", 500, 60);
+			int healthStartX = 575;
+			for (int i = 0; i < getAisha().getCurrentHealth(); i++) {
+				g.drawImage(aishaHealth, healthStartX, 48, this);
+				healthStartX += 25;
+			}
+			healthStartX = 575;
+			// draw Spell
+			g.drawString("Spell: ", 500, 90);
+			for (int i = 0; i < getAisha().getCurrentSpell(); i++) {
+				g.drawImage(aishaSpell, healthStartX, 78, this);
+				healthStartX += 25;
+			}
+		} else if (state == GameState.Dead) {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, 800, 700);
+			g.setColor(Color.WHITE);
+			g.drawString("Dead", 360, 350);
 		}
 	}
 
@@ -220,34 +251,34 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			aisha.moveUp();
-			aisha.setMovingUp(true);
+			getAisha().moveUp();
+			getAisha().setMovingUp(true);
 			break;
 
 		case KeyEvent.VK_DOWN:
-			aisha.moveDown();
-			aisha.setMovingDown(true);
+			getAisha().moveDown();
+			getAisha().setMovingDown(true);
 			break;
 
 		case KeyEvent.VK_LEFT:
-			aisha.moveLeft();
-			aisha.setMovingLeft(true);
+			getAisha().moveLeft();
+			getAisha().setMovingLeft(true);
 			break;
 
 		case KeyEvent.VK_RIGHT:
-			aisha.moveRight();
-			aisha.setMovingRight(true);
+			getAisha().moveRight();
+			getAisha().setMovingRight(true);
 			break;
 
 		case KeyEvent.VK_Z:
-			aisha.fire();
+			getAisha().fire();
 			break;
-		
+
 		case KeyEvent.VK_X:
-			if(aisha.getCurrentSpell() > 0){
-				aisha.spell();
+			if (getAisha().getCurrentSpell() > 0) {
+				getAisha().spell();
 			}
-			aisha.setCurrentSpell(aisha.getCurrentSpell() - 1);
+			getAisha().setCurrentSpell(getAisha().getCurrentSpell() - 1);
 			break;
 		}
 	}
@@ -256,19 +287,19 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			aisha.stopUp();
+			getAisha().stopUp();
 			break;
 
 		case KeyEvent.VK_DOWN:
-			aisha.stopDown();
+			getAisha().stopDown();
 			break;
 
 		case KeyEvent.VK_LEFT:
-			aisha.stopLeft();
+			getAisha().stopLeft();
 			break;
 
 		case KeyEvent.VK_RIGHT:
-			aisha.stopRight();
+			getAisha().stopRight();
 			break;
 
 		case KeyEvent.VK_Z:
@@ -298,6 +329,10 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 
 	public static void setScore(int s) {
 		score = s;
+	}
+
+	public Aisha getAisha() {
+		return aisha;
 	}
 
 }

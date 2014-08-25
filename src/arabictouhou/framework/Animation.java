@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 // commenting liberally?
+// well then, I think Obamacare is good 
+// lolol
 public class Animation {
 	// think of this like a .gif
 	private ArrayList<AnimFrame> frames;

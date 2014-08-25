@@ -42,6 +42,114 @@ public class Bullet {
 				MainClass.setScore(MainClass.getScore() + 100);
 			}
 		}
+		if(rec.intersects(MainClass.jidf1.rec)){
+			visible = false;
+			if (MainClass.jidf1.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf1.setCurrentHealth(MainClass.jidf1
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf1.getCurrentHealth() == 0){
+				MainClass.jidf1.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
+		if(rec.intersects(MainClass.jidf2.rec)){
+			visible = false;
+			if (MainClass.jidf2.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf2.setCurrentHealth(MainClass.jidf2
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf2.getCurrentHealth() == 0){
+				MainClass.jidf2.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
+		if(rec.intersects(MainClass.jidf3.rec)){
+			visible = false;
+			if (MainClass.jidf3.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf3.setCurrentHealth(MainClass.jidf3
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf3.getCurrentHealth() == 0){
+				MainClass.jidf3.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
+		if(rec.intersects(MainClass.jidf4.rec)){
+			visible = false;
+			if (MainClass.jidf4.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf4.setCurrentHealth(MainClass.jidf4
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf4.getCurrentHealth() == 0){
+				MainClass.jidf4.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
+		if(rec.intersects(MainClass.jidf5.rec)){
+			visible = false;
+			if (MainClass.jidf5.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf5.setCurrentHealth(MainClass.jidf5
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf5.getCurrentHealth() == 0){
+				MainClass.jidf5.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
+		if(rec.intersects(MainClass.jidf6.rec)){
+			visible = false;
+			if (MainClass.jidf6.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf6.setCurrentHealth(MainClass.jidf6
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf6.getCurrentHealth() == 0){
+				MainClass.jidf6.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
+		if(rec.intersects(MainClass.jidf7.rec)){
+			visible = false;
+			if (MainClass.jidf7.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf7.setCurrentHealth(MainClass.jidf7
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf7.getCurrentHealth() == 0){
+				MainClass.jidf7.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
+		if(rec.intersects(MainClass.jidf8.rec)){
+			visible = false;
+			if (MainClass.jidf8.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf8.setCurrentHealth(MainClass.jidf8
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf8.getCurrentHealth() == 0){
+				MainClass.jidf8.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
+		if(rec.intersects(MainClass.jidf9.rec)){
+			visible = false;
+			if (MainClass.jidf9.getCurrentHealth() > 0) {
+				MainClass.setScore(MainClass.getScore() + 1);
+				MainClass.jidf9.setCurrentHealth(MainClass.jidf9
+						.getCurrentHealth() - 1);
+			}
+			if(MainClass.jidf9.getCurrentHealth() == 0){
+				MainClass.jidf9.setCenterX(-500);
+				MainClass.setScore(MainClass.getScore() + 10);
+			}
+		}
 	}
 
 	public int getX() {
