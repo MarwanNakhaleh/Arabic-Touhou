@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import arabictouhou.framework.Animation;
 
@@ -25,6 +27,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	public static Rachel rachel;
 	public static JIDF jidf1, jidf2, jidf3, jidf4, jidf5, jidf6, jidf7, jidf8,
 			jidf9;
+	public static ArrayList<JIDF> idf = new ArrayList<>();
 	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, aishaBullet,
 			aishaHealth, aishaSpell;
 	private Image rachel1, rachel2, rachel3, jidf;
@@ -93,14 +96,30 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		aisha = new Aisha();
 		rachel = new Rachel(240, 75);
 		jidf1 = new JIDF(240, 300);
+		idf.add(jidf1);
 		jidf2 = new JIDF(200, 250);
+		idf.add(jidf2);
 		jidf3 = new JIDF(280, 250);
+		idf.add(jidf3);
 		jidf4 = new JIDF(160, 200);
+		idf.add(jidf4);
 		jidf5 = new JIDF(320, 200);
+		idf.add(jidf5);
 		jidf6 = new JIDF(120, 150);
+		idf.add(jidf6);
 		jidf7 = new JIDF(360, 150);
+		idf.add(jidf7);
 		jidf8 = new JIDF(80, 100);
+		idf.add(jidf8);
 		jidf9 = new JIDF(400, 100);
+		idf.add(jidf9);
+		Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+            	
+            }
+        }, 5000, 5000);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -144,15 +163,10 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 					}
 				}
 				//update JIDF
-				jidf1.update();
-				jidf2.update();
-				jidf3.update();
-				jidf4.update();
-				jidf5.update();
-				jidf6.update();
-				jidf7.update();
-				jidf8.update();
-				jidf9.update();
+				for(int i = 0; i < idf.size(); i++){
+					JIDF IDF = (JIDF) idf.get(i);
+					IDF.update();
+				}
 				bg1.update();
 				bg2.update();
 				aisha_animate.update(10);
