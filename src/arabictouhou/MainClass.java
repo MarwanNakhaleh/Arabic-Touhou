@@ -30,7 +30,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 	public static ArrayList<JIDF> idf = new ArrayList<>();
 	private Image image, aisha1, aisha2, aisha3, aisha4, aisha5, aishaBullet,
 			aishaHealth, aishaSpell;
-	private Image rachel1, rachel2, rachel3, jidf;
+	private Image rachel1, rachel2, rachel3, jidf, IDFBullet;
 	private Image background;
 	private Graphics second;
 	private URL base;
@@ -66,6 +66,7 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		rachel3 = getImage(base, "data/Rachel_sprite2.png");
 		// JIDF
 		jidf = getImage(base, "data/enemy1.png");
+		IDFBullet = getImage(base, "data/IDF_bullet.png");
 		// let's get animated!
 		aisha_animate = new Animation();
 		aisha_animate.addFrame(aisha1, 100);
@@ -114,12 +115,12 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 		jidf9 = new JIDF(400, 100);
 		idf.add(jidf9);
 		Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-            	
-            }
-        }, 5000, 5000);
+		timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+
+			}
+		}, 5000, 5000);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -162,11 +163,31 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 						rachelBullets.remove(b);
 					}
 				}
-				//update JIDF
-				for(int i = 0; i < idf.size(); i++){
+				// update JIDF
+				for (int i = 0; i < idf.size(); i++) {
 					JIDF IDF = (JIDF) idf.get(i);
 					IDF.update();
 				}
+				// make JIDF fire
+				Timer timer = new Timer();
+				timer.scheduleAtFixedRate(new TimerTask() {
+					@Override
+					public void run() {
+						for (int i = 0; i < idf.size(); i++) {
+							JIDF IDF = (JIDF) idf.get(i);
+							IDF.fire();
+							ArrayList<Bullet> bullets = IDF.getBullets();
+							for (int j = 0; j < bullets.size(); j++) {
+								Bullet b = (Bullet) bullets.get(j);
+								if (b.isVisible()) {
+									b.update();
+								} else {
+									bullets.remove(b);
+								}
+							}
+						}
+					}
+				}, 2000, 1000);
 				bg1.update();
 				bg2.update();
 				aisha_animate.update(10);
@@ -221,9 +242,15 @@ public class MainClass extends Applet implements Runnable, KeyListener {
 			g.drawImage(aisha_animate.getImage(), getAisha().getCenterX() - 30,
 					getAisha().getCenterY() - 60, this);
 			// then JIDF
-			for(int i = 0; i < idf.size(); i++){
+			for (int i = 0; i < idf.size(); i++) {
 				JIDF IDF = (JIDF) idf.get(i);
-				g.drawImage(jidf, IDF.getCenterX() - 13, IDF.getCenterY() - 29, this);
+				g.drawImage(jidf, IDF.getCenterX() - 13, IDF.getCenterY() - 29,
+						this);
+				ArrayList<Bullet> bullets = IDF.getBullets();
+				for (int j = 0; j < bullets.size(); j++) {
+					Bullet b = (Bullet) bullets.get(j);
+					g.drawImage(IDFBullet, b.getX(), b.getY(), this);
+				}
 			}
 			// then Rachel
 			g.drawImage(rachel_animate.getImage(), rachel.getCenterX() - 50,
